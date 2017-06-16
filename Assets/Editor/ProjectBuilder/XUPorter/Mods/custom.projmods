@@ -1,0 +1,36 @@
+{
+	"libs": [],
+	"frameworks":[],
+	"headerpaths": [],
+	"files": ["../../../../PTUGame/PTGame/Plugins/iOS/KeychainItemWrapper.mm:-fno-objc-arc","../../../../../KeychainAccess.plist"],
+	"folders": [],
+	"excludes": [],
+	"compiler_flags": [],
+	"linker_flags": [],
+	"embed_binaries": [],
+    "plist": {
+         "dicType":[
+            {
+                 "key":"UIRequiresFullScreen",
+                 "value":true
+            },
+            {
+                 "key":"NSPhotoLibraryUsageDescription",
+                 "value":"App需要您的同意,才能访问相册"
+            },
+            {
+                 "key":"NSCameraUsageDescription",
+                 "value":"App需要您的同意,才能访问相机"
+            }
+            ,
+            {
+                 "key":"NSMicrophoneUsageDescription",
+                 "value":"App需要您的同意,才能访问麦克风"
+            }
+          ],
+    	 "urltype" : [
+            
+        ]
+    }
+
+}
