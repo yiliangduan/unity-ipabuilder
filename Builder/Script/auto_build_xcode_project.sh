@@ -1,5 +1,7 @@
 #!/bin/sh
 
+#Created by elang on 2017/6/19.
+
 #-------------使用说明--------------
 
 usage() 
@@ -20,8 +22,9 @@ exit 1;}
 
 unity_project_path=`pwd`
 
-build_script_path=$unity_project_path"/BuildScript/"
-project_xcode_path=$unity_project_path"/iOSBuild/"
+build_script_path=$unity_project_path"/Builder/Script/"
+project_xcode_path=$unity_project_path"/Builder/iOSBuild/"
+product_path=$unity_project_path"/Builder/Product/"
 
 #-----------读取命令参数-------------
 
@@ -148,7 +151,7 @@ product_name=${bundle_identity##*.}
 project_target="Unity-iPhone"
 
 xcode_project_filepath=$project_xcode_path$project_target".xcodeproj"
-package_out_path=$project_xcode_path"/build/Release-iphoneos/"
+package_out_path=$project_xcode_path"build/Release-iphoneos/"
 
 app_package_path=$package_out_path$product_name".app"
 
@@ -157,7 +160,7 @@ if [ ! -d "$app_package_path" ]; then
 fi
 
 
-xcodebuild  clean
+#xcodebuild  clean
 
 xcodebuild  -project $xcode_project_filepath \
             -configuration $build_mode \
@@ -180,16 +183,20 @@ cur_folder_path=`pwd`
 cur_time=`date "+%Y%m%d%H%M"`
 
 
-package_unique_flag=$build_version"_"$build_number"_"$cur_time
-package_unique_path=$package_out_path$display_name"_"$package_unique_flag".ipa"
+package_unique_flag=$display_name"_"$build_version"_"$build_number"_"$cur_time
+package_unique_path=$package_out_path$package_unique_flag".ipa"
 
 xcrun -sdk iphoneos PackageApplication -v $app_package_path -o $package_unique_path
+
+mv -v $package_unique_path $product_path"ipa/"$package_unique_flag".ipa"
+
+mv -v $app_package_path".dSYM" $product_path"dSYM/"$package_unique_flag".app.dSYM"
 
 echo "remove "$app_package_path
 rm -rf $app_package_path
 
 cd $pre_compile_path
 
-echo "[ output => "$package_unique_path".ipa]"
+echo "[ output => "$package_unique_path"]"
 
 echo "[-------app compress to ipa complete------]"

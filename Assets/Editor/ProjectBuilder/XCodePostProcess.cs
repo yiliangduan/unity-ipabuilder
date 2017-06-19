@@ -26,8 +26,9 @@ namespace XcodeBuilder
 			// Find and run through all projmods files to patch the project.
 			// Please pay attention that ALL projmods files in your project folder will be excuted!
 			string[] files = Directory.GetFiles( Application.dataPath, "*.projmods", SearchOption.AllDirectories );
+
 			foreach( string file in files ) {
-				UnityEngine.Debug.Log("ProjMod File: "+file);
+				Debug.Log("ProjMod File: "+file);
 				project.ApplyMod( file );
 			}
 
@@ -43,8 +44,6 @@ namespace XcodeBuilder
 			project.Save();
 		}
 
-
-		//TODO implement generic settings as a module option
 		private static void OverWriteBuildSetting(ProjectBasicConfig config, XCProject project)
 		{
 			project.overwriteBuildSetting("CODE_SIGN_IDENTITY", config.CodeSigningIdentify, "Debug");

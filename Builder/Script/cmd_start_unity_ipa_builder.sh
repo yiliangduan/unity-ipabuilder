@@ -1,5 +1,7 @@
 #!/bin/sh
 
+#Created by elang on 2017/6/19.
+
 #-------------使用说明--------------
 
 usage() 
@@ -62,7 +64,7 @@ if [ -z "${v}" ] || [ -z "${b}" ] || [ -z "${c}" ]; then
 fi
 
 if [ -z "${p}" ]; then
-	project_path=`pwd`"/../"
+	project_path=`pwd`"/../../"
 else
 	project_path=${p}
 fi
@@ -84,7 +86,7 @@ fi
 
 #---静默启动Unity，调用我们的打包的方法----
 
-log_file_path=../iOSBuild/build/log/
+log_file_path=../Product/log/
 
 if [ ! -d $log_file_path ]; then
 	mkdir -p $log_file_path

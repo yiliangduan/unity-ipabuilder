@@ -1,4 +1,8 @@
-﻿
+﻿/**
+ * Created by elang on 2017/6/19.
+ */
+
+
 using UnityEngine;
 using UnityEditor;
 using System.IO;
@@ -8,7 +12,7 @@ using System.IO;
 
 namespace XcodeBuilder
 {
-    public class ProjectBuilder {
+    public static class ProjectBuilder {
 
         public static ProjectBuildData BuildData;
 
@@ -23,7 +27,10 @@ namespace XcodeBuilder
 
         public static void ExportForiOS(ProjectBuildData data)
         {
-            DeleteExistProject();
+            if (Directory.Exists(BuildPaths.ProjectPath))
+            {
+                Directory.Delete(BuildPaths.ProjectPath, true);
+            }
 
             if (data.ScriptingImpl == ScriptingImpl.Mono2x)
             {
@@ -44,32 +51,6 @@ namespace XcodeBuilder
             XCodePostProcess.OnPostProcessBuild(BuildTarget.iOS, BuildPaths.ProjectPath, data.Channel, data);
         }
 
-        private static void DeleteExistProject()
-        {
-            if (!Directory.Exists(BuildPaths.ProjectPath))
-                return;
-
-            string[] directories = Directory.GetDirectories(BuildPaths.ProjectPath);
-
-            for (int i=0; i<directories.Length; ++i)
-            {
-                string[] directoryCompose = directories[i].Split('/');
-
-                if (0 != directoryCompose[directoryCompose.Length-1].CompareTo("build"))
-                {
-                    Directory.Delete(directories[i], true);
-                }
-            }
-
-            string[] files = Directory.GetFiles(BuildPaths.ProjectPath);
-
-            for (int i=0; i<files.Length; ++i)
-            {
-                File.Delete(files[i]);
-            }
-        }
-    
-        //[MenuItem("Build/Export&Build iOS Project (Mono2x)")]
         private static void BuildForiOSBaseOnMono()
         {
             BuildOptions buildOptions = BuildOptions.None;
@@ -82,7 +63,6 @@ namespace XcodeBuilder
             ExportIOSProjectInteral(buildOptions);
         }
 
-        //[MenuItem("Build/Export&Build iOS Project (IL2CPP64)")]
         private static void BuildForiOSBaseOnIL2CPP64()
         {
             BuildOptions buildOptions = BuildOptions.None;
@@ -97,7 +77,6 @@ namespace XcodeBuilder
             ExportIOSProjectInteral(buildOptions);
         }
 
-        //[MenuItem("Build/Export&Build iOS Project (IL2CPP32&64)")]
         private static void BuildForiOSBaseOnIL2CPP32_64()
         {
             BuildOptions buildOptions = BuildOptions.None;
