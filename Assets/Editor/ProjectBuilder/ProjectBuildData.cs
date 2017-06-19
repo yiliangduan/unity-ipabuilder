@@ -35,5 +35,11 @@ namespace XcodeBuilder
         public string IdentityBuild;
 
         public PackageChannel Channel;
+
+
+        public bool Integrity()
+        {
+            return null != IdentityVersion && null != IdentityBuild;
+        }
     }
 }
